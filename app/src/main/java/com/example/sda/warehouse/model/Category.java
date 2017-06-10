@@ -3,16 +3,16 @@ package com.example.sda.warehouse.model;
 public class Category {
     private long id;
     private String name;
-    private long parentId;
+    private Category parentCategory;
 
-    public Category(long id, String name, long parentId) {
+    public Category(long id, String name, Category parentCategory) {
         this.id = id;
         this.name = name;
-        this.parentId = parentId;
+        this.parentCategory = parentCategory;
     }
-    public Category( String name, long parentId) {
+    public Category( String name, Category parentCategory) {
         this.name = name;
-        this.parentId = parentId;
+        this.parentCategory = parentCategory;
     }
 
     public Category(){};
@@ -33,12 +33,12 @@ public class Category {
         this.name = name;
     }
 
-    public long getParentId() {
-        return parentId;
+    public Category getParentCategory() {
+        return parentCategory;
     }
 
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Category {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", parentId=" + parentId +
+                ", parentCategory=" + parentCategory +
                 '}';
     }
 }

@@ -85,7 +85,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         public void setCategory(Category category) {
             this.category = category;
             categoryName.setText(category.getName());
-            categoryParent.setText("Parent id: " + Long.toString(category.getParentId()));
+            categoryParent.setText("Parent id: " + Long.toString(category.getParentCategory()));
         }
 
     }

@@ -10,6 +10,8 @@ import com.example.sda.warehouse.model.datasource.database.DatabaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.os.Build.ID;
+
 
 public class CategoryDataSource implements IDataProvider<Category> {
 
@@ -69,10 +71,10 @@ public class CategoryDataSource implements IDataProvider<Category> {
             categoryRecord.setId(cursor.getLong(cursor.getColumnIndex(ID_COL)));
             categoryRecord.setName(cursor.getString(cursor.getColumnIndex(NAME_COL)));
             if (cursor.isNull(cursor.getColumnIndex(ID_PARENT_COL))) {
-                categoryRecord.setParentId(EMPTY);
+                categoryRecord.setParentCategory(null);
             } else {
                 id_parent = cursor.getLong(cursor.getColumnIndex(ID_PARENT_COL));
-                categoryRecord.setParentId(id_parent);
+                categoryRecord.setParentCategory(getById(id_parent));
             }
             categories.add(categoryRecord);
             cursor.moveToNext();
@@ -86,10 +88,14 @@ public class CategoryDataSource implements IDataProvider<Category> {
 
     private Category getCategoryFromCursor(Cursor cursor) {
         cursor.moveToFirst();
+        long cursorColumnIndex = cursor.getColumnIndex(ID_PARENT_COL);
+        if(cursor.isNull(cursorColumnIndex)){
+            cursor.getLong(cursor.getColumnIndex(ID_PARENT_COL));
+        }
         Category category = new Category(
                 cursor.getLong(cursor.getColumnIndex(ID_COL)),
                 cursor.getString(cursor.getColumnIndex(NAME_COL)),
-                cursor.getLong(cursor.getColumnIndex(ID_PARENT_COL)));
+                );
 
         cursor.close();
         databaseHelper.close();
@@ -105,7 +111,7 @@ public class CategoryDataSource implements IDataProvider<Category> {
         contentValues.put(NAME_COL, category.getName());
 
         try {
-            contentValues.put(ID_PARENT_COL, category.getParentId());
+            contentValues.put(ID_PARENT_COL, category.getParentCategory());
         } catch (NullPointerException e) {
             contentValues.put(ID_PARENT_COL, 0);
         }
