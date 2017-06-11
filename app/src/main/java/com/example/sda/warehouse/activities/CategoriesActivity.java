@@ -3,12 +3,15 @@ package com.example.sda.warehouse.activities;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.model.Category;
@@ -18,7 +21,7 @@ import com.example.sda.warehouse.ui.CategoriesAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategoriesActivity extends AppCompatActivity implements CategoriesAdapter.CategoryClickListener {
+public class CategoriesActivity extends AppCompatActivity implements CategoriesAdapter.CategoryClickListener{
 
     @BindView(R.id.categories_recycler)
     RecyclerView recyclerView;
@@ -27,6 +30,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
 
     private CategoryDataSource categoryDataSource;
     private CategoriesAdapter categoriesAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +51,20 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
 
 
         categoriesAdapter = new CategoriesAdapter(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoriesAdapter);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getCategories();
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.blue_bright,
+                        R.color.green_light,
+                        R.color.orange_light,
+                        R.color.red_light);
             }
         });
 
@@ -93,7 +104,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                     public void onClick(DialogInterface dialog, int which) {
                         categoryDataSource.remove(category.getId());
                         logDebug(category + " deleted.");
-                        // TODO: 11.06.17 Toast to be added
+                        makeShortToast("Item deleted");
                         getCategories();
 
                     }
@@ -105,6 +116,10 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+
+
+        getCategories();
+
     }
 
     @Override
@@ -114,9 +129,16 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
 
     private void showProgressBar() {
         swipeRefreshLayout.setRefreshing(true);
+
     }
 
     private void hideProgressBar() {
         swipeRefreshLayout.setRefreshing(false);
     }
+
+
+
+   private void makeShortToast(String string){
+       Toast.makeText(this,string,Toast.LENGTH_SHORT).show();
+   }
 }
