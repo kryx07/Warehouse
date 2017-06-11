@@ -22,13 +22,8 @@ public class CategoryDataSource implements IDataProvider<Category> {
     public static final String NAME_COL = "name";
     public static final String ID_PARENT_COL = "id_parent";
 
-    private static final long EMPTY = 0;
-
-
     public CategoryDataSource() {
-
         this.databaseHelper = DatabaseHelper.getInstance();
-
     }
 
     @Override
@@ -55,14 +50,20 @@ public class CategoryDataSource implements IDataProvider<Category> {
 
     @Override
     public Category getById(long id) {
-        Cursor cursor = databaseHelper.getReadableDatabase().query(CATEGORY_TABLE_NAME,
-                new String[]{ID_COL, NAME_COL, ID_PARENT_COL}, ID_COL + " = " + id, null, null, null, null);
-
-        return getCategoryFromCursor(cursor);
-
+        if (id == 0) {
+            return null;
+        }
+        Cursor cursor = databaseHelper.getReadableDatabase().query(
+                CATEGORY_TABLE_NAME,
+                new String[]{ID_COL, NAME_COL, ID_PARENT_COL},
+                ID_COL + " = " + id, null, null, null, null);
+        return cursor.getCount() == 0 ? null : getCategoriesFromCursor(cursor).get(0);
     }
 
     private List<Category> getCategoriesFromCursor(Cursor cursor) {
+       /* if (cursor.getCount() == 0) {
+            return null;
+        }*/
         cursor.moveToFirst();
         List<Category> categories = new ArrayList<>();
         long id_parent;
@@ -86,16 +87,23 @@ public class CategoryDataSource implements IDataProvider<Category> {
         return categories;
     }
 
-    private Category getCategoryFromCursor(Cursor cursor) {
+    /*private Category getCategoryFromCursor(Cursor cursor) {
         cursor.moveToFirst();
-        long cursorColumnIndex = cursor.getColumnIndex(ID_PARENT_COL);
-        if(cursor.isNull(cursorColumnIndex)){
-            cursor.getLong(cursor.getColumnIndex(ID_PARENT_COL));
+
+        int parentColumnIndex = cursor.getColumnIndex(ID_PARENT_COL);
+        Category parentCategory;
+        if (cursor.getCount() == 0) {
+            return null;
+        }
+        if (cursor.isNull(parentColumnIndex)) {
+            parentCategory = null;
+        } else {
+            parentCategory = getById(cursor.getLong(parentColumnIndex));
         }
         Category category = new Category(
                 cursor.getLong(cursor.getColumnIndex(ID_COL)),
                 cursor.getString(cursor.getColumnIndex(NAME_COL)),
-                );
+                parentCategory);
 
         cursor.close();
         databaseHelper.close();
@@ -103,15 +111,14 @@ public class CategoryDataSource implements IDataProvider<Category> {
         logDebug("Category DB returns: " + category);
         return category;
     }
-
-
+*/
     @Override
     public void add(Category category) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NAME_COL, category.getName());
 
         try {
-            contentValues.put(ID_PARENT_COL, category.getParentCategory());
+            contentValues.put(ID_PARENT_COL, category.getParentCategory().getId());
         } catch (NullPointerException e) {
             contentValues.put(ID_PARENT_COL, 0);
         }

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sda.warehouse.R;
@@ -25,6 +26,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
          * @param category to be passed .
          */
         void onCategoryClick(Category category);
+        void onDeleteClick(Category category);
     }
 
     public CategoriesAdapter(CategoryClickListener categoryClickListener) {
@@ -66,7 +68,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         TextView categoryName;
         @BindView(R.id.category_parent)
         TextView categoryParent;
-
+        @BindView(R.id.delete_icon)
+        ImageView deleteButton;
         private Category category;
 
         public CategoryHolder(View itemView) {
@@ -79,13 +82,20 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
                     categoryClickListener.onCategoryClick(category);
                 }
             });
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    categoryClickListener.onDeleteClick(category);
+                }
+            });
+
         }
 
 
         public void setCategory(Category category) {
             this.category = category;
             categoryName.setText(category.getName());
-            categoryParent.setText("Parent id: " + Long.toString(category.getParentCategory()));
+            categoryParent.setText("Parent: " + category.getParentCategory());
         }
 
     }
