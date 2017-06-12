@@ -29,6 +29,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         void onDeleteClick(Category category);
     }
 
+    // TODO: 12.06.17
+    /*
+    List of checked boxed to be implemented
+    https://stackoverflow.com/questions/33434626/get-list-of-checked-checkboxes-from-recyclerview-android
+     */
+
     public CategoriesAdapter(CategoryClickListener categoryClickListener) {
         this.categoryClickListener = categoryClickListener;
     }

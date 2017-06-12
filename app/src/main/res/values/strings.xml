@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Warehouse</string>
+    <string name="delete">Delete</string>
 </resources>

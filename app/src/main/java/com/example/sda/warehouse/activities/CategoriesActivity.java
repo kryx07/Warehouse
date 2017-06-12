@@ -1,16 +1,16 @@
 package com.example.sda.warehouse.activities;
 
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ViewTreeObserver;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.sda.warehouse.R;
@@ -21,12 +21,14 @@ import com.example.sda.warehouse.ui.CategoriesAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategoriesActivity extends AppCompatActivity implements CategoriesAdapter.CategoryClickListener{
+public class CategoriesActivity extends AppCompatActivity implements CategoriesAdapter.CategoryClickListener {
 
     @BindView(R.id.categories_recycler)
     RecyclerView recyclerView;
     @BindView(R.id.activity_main_swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton floatingActionButton;
 
     private CategoryDataSource categoryDataSource;
     private CategoriesAdapter categoriesAdapter;
@@ -47,8 +49,8 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
 
         categoryDataSource = new CategoryDataSource();
 
-        categoryDataSource.add(new Category("Yet Another Category", categoryDataSource.getById(3)));
-
+        //categoryDataSource.add(new Category("Yet Another Category", categoryDataSource.getById(3)));
+        categoryDataSource.add(new Category("Another Category", categoryDataSource.getById(3)));
 
         categoriesAdapter = new CategoriesAdapter(this);
 
@@ -65,10 +67,26 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                         R.color.green_light,
                         R.color.orange_light,
                         R.color.red_light);
+                floatingActionButton.show();
             }
         });
 
         getCategories();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_delete) {
+
+            return true;
+        }
+        return false;
     }
 
     private void getCategories() {
@@ -137,8 +155,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
     }
 
 
-
-   private void makeShortToast(String string){
-       Toast.makeText(this,string,Toast.LENGTH_SHORT).show();
-   }
+    private void makeShortToast(String string) {
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+    }
 }
