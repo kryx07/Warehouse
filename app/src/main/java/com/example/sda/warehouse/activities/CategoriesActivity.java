@@ -1,6 +1,7 @@
 package com.example.sda.warehouse.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,11 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.model.Category;
-import com.example.sda.warehouse.model.datasource.CategoryDataSource;
+import com.example.sda.warehouse.model.stores.IStore;
+import com.example.sda.warehouse.model.stores.StoreFactory;
 import com.example.sda.warehouse.ui.CategoriesAdapter;
 
 import butterknife.BindView;
@@ -30,7 +33,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
     @BindView(R.id.fab)
     FloatingActionButton floatingActionButton;
 
-    private CategoryDataSource categoryDataSource;
+    private IStore<Category> categoryStore;
     private CategoriesAdapter categoriesAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -40,17 +43,15 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
         setContentView(R.layout.activity_categories);
         ButterKnife.bind(this);
         init();
-
-
     }
 
     private void init() {
 
 
-        categoryDataSource = new CategoryDataSource();
+        categoryStore = StoreFactory.createCategoriesStore();
 
-        //categoryDataSource.add(new Category("Yet Another Category", categoryDataSource.getById(3)));
-        categoryDataSource.add(new Category("Another Category", categoryDataSource.getById(3)));
+        //categoryStore.add(new Category("Yet Another Category", categoryStore.getById(3)));
+        categoryStore.add(new Category("Another Category", categoryStore.getById(3)));
 
         categoriesAdapter = new CategoriesAdapter(this);
 
@@ -68,6 +69,13 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                         R.color.orange_light,
                         R.color.red_light);
                 floatingActionButton.show();
+            }
+        });
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CategoryActivity.class));
+
             }
         });
 
@@ -92,7 +100,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
     private void getCategories() {
         showProgressBar();
         logDebug("Getting all categories.");
-        categoriesAdapter.setData(categoryDataSource.getAll());
+        categoriesAdapter.setData(categoryStore.getAll());
         hideProgressBar();
     }
 
@@ -106,7 +114,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
 
         logDebug(category + " clicked.");
         logDebug("Editing " + category);
-        //categoryDataSource.remove(category.getId());
+        //categoryStore.remove(category.getId());
         getCategories();
     }
 
@@ -120,7 +128,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                 .setMessage("Are you sure you want to delete this entry?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        categoryDataSource.remove(category.getId());
+                        categoryStore.remove(category.getId());
                         logDebug(category + " deleted.");
                         makeShortToast("Item deleted");
                         getCategories();

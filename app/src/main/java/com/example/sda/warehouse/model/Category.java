@@ -1,5 +1,7 @@
 package com.example.sda.warehouse.model;
 
+import java.util.List;
+
 public class Category {
     private long id;
     private String name;
@@ -39,6 +41,20 @@ public class Category {
 
     public void setParentCategory(Category parentCategory) {
         this.parentCategory = parentCategory;
+    }
+
+    public static int getPositionById(long id, List<Category> list) {
+        int position = -1;
+
+        for(int i = 0;i < list.size();++i) {
+            Category category = list.get(i);
+            if(category.getId() == id) {
+                position = i;
+                break;
+            }
+        }
+
+        return position;
     }
 
     @Override

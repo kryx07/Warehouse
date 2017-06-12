@@ -26,11 +26,20 @@ public class CategoriesStore implements IStore<Category> {
 
     @Override
     public List<Category> getAll() {
-
-        Cursor cursor = databaseHelper.getReadableDatabase().query(
+        return getAll(ID_COL, "DESC");
+        /*Cursor cursor = databaseHelper.getReadableDatabase().query(
                 CATEGORY_TABLE_NAME,
                 new String[]{ID_COL, NAME_COL, ID_PARENT_COL},
                 null, null, null, null, null, null);
+        return getCategoriesFromCursor(cursor);*/
+    }
+
+    @Override
+    public List<Category> getWithoutId(long withoutId) {
+        Cursor cursor = databaseHelper.getReadableDatabase().query(CATEGORY_TABLE_NAME,
+                new String[]{ID_COL, NAME_COL, ID_PARENT_COL},
+                ID_COL + "!=" + withoutId, null, null, null, null, null);
+
         return getCategoriesFromCursor(cursor);
     }
 
