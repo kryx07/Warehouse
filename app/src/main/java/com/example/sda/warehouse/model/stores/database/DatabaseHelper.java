@@ -1,10 +1,10 @@
-package com.example.sda.warehouse.model.datasource.database;
+package com.example.sda.warehouse.model.stores.database;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.sda.warehouse.model.datasource.CategoryDataSource;
+import com.example.sda.warehouse.model.stores.CategoriesStore;
 import com.example.sda.warehouse.utils.MyApplication;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -13,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper databaseHelper;
 
     public DatabaseHelper() {
-        super(MyApplication.getContext(), CategoryDataSource.CATEGORY_TABLE_NAME, null, 1);
+        super(MyApplication.getContext(), CategoriesStore.CATEGORY_TABLE_NAME, null, 1);
     }
 
     @Override
@@ -34,9 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void createCategoryTable() {
-        String sqlCommand = "CREATE TABLE " + CategoryDataSource.CATEGORY_TABLE_NAME + " (" + CategoryDataSource.ID_COL
-                + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CategoryDataSource.NAME_COL +
-                " TEXT NOT NULL, " + CategoryDataSource.ID_PARENT_COL + " INTEGER);";
+        String sqlCommand = "CREATE TABLE " + CategoriesStore.CATEGORY_TABLE_NAME + " (" + CategoriesStore.ID_COL
+                + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CategoriesStore.NAME_COL +
+                " TEXT NOT NULL, " + CategoriesStore.ID_PARENT_COL + " INTEGER);";
         logDebug(sqlCommand);
         sqLiteDatabase.execSQL(sqlCommand);
     }
