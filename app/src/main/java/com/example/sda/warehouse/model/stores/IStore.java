@@ -1,8 +1,8 @@
-package com.example.sda.warehouse.model.datasource;
+package com.example.sda.warehouse.model.stores;
 
 import java.util.List;
 
-public interface IDataProvider<T> {
+public interface IStore<T> {
 
     List<T> getAll();
 

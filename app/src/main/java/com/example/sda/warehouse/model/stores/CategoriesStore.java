@@ -1,19 +1,17 @@
-package com.example.sda.warehouse.model.datasource;
+package com.example.sda.warehouse.model.stores;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
 import com.example.sda.warehouse.model.Category;
-import com.example.sda.warehouse.model.datasource.database.DatabaseHelper;
+import com.example.sda.warehouse.model.stores.database.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.os.Build.ID;
 
-
-public class CategoryDataSource implements IDataProvider<Category> {
+public class CategoriesStore implements IStore<Category> {
 
     private DatabaseHelper databaseHelper;
 
@@ -22,7 +20,7 @@ public class CategoryDataSource implements IDataProvider<Category> {
     public static final String NAME_COL = "name";
     public static final String ID_PARENT_COL = "id_parent";
 
-    public CategoryDataSource() {
+    public CategoriesStore() {
         this.databaseHelper = DatabaseHelper.getInstance();
     }
 

@@ -1,21 +1,18 @@
 package com.example.sda.warehouse.activities;
 
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.model.Category;
-import com.example.sda.warehouse.model.datasource.CategoryDataSource;
+import com.example.sda.warehouse.model.stores.CategoriesStore;
 import com.example.sda.warehouse.ui.CategoriesAdapter;
 
 import butterknife.BindView;
@@ -28,9 +25,8 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
     @BindView(R.id.activity_main_swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private CategoryDataSource categoryDataSource;
+    private CategoriesStore categoriesStore;
     private CategoriesAdapter categoriesAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +41,14 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
     private void init() {
 
 
-        categoryDataSource = new CategoryDataSource();
+        categoriesStore = new CategoriesStore();
 
-        categoryDataSource.add(new Category("Yet Another Category", categoryDataSource.getById(3)));
-
+        categoriesStore.add(new Category("Yet Another Category", categoriesStore.getById(3)));
 
         categoriesAdapter = new CategoriesAdapter(this);
 
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoriesAdapter);
 
@@ -74,7 +70,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
     private void getCategories() {
         showProgressBar();
         logDebug("Getting all categories.");
-        categoriesAdapter.setData(categoryDataSource.getAll());
+        categoriesAdapter.setData(categoriesStore.getAll());
         hideProgressBar();
     }
 
@@ -102,7 +98,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                 .setMessage("Are you sure you want to delete this entry?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        categoryDataSource.remove(category.getId());
+                        categoriesStore.remove(category.getId());
                         logDebug(category + " deleted.");
                         makeShortToast("Item deleted");
                         getCategories();
@@ -117,8 +113,6 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
 
-
-        getCategories();
 
     }
 
