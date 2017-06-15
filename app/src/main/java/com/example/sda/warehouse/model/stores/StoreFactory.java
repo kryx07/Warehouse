@@ -1,7 +1,6 @@
 package com.example.sda.warehouse.model.stores;
 
-import com.example.sda.warehouse.model.Category;
-import com.example.sda.warehouse.model.stores.database.DatabaseHelper;
+import com.example.sda.warehouse.model.beans.Category;
 
 public class StoreFactory {
     public static IStore<Category> createCategoriesStore() {

@@ -1,30 +1,29 @@
 package com.example.sda.warehouse.activities;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.sda.warehouse.R;
-import com.example.sda.warehouse.model.Category;
+import com.example.sda.warehouse.model.beans.Category;
 import com.example.sda.warehouse.model.stores.IStore;
 import com.example.sda.warehouse.model.stores.StoreFactory;
 import com.example.sda.warehouse.ui.CategoriesAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategoriesActivity extends AppCompatActivity implements CategoriesAdapter.CategoryClickListener {
+public class CategoriesActivity extends RefreshableActivity implements CategoriesAdapter.CategoryClickListener {
 
     @BindView(R.id.categories_recycler)
     RecyclerView recyclerView;
@@ -37,6 +36,8 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
     private CategoriesAdapter categoriesAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private List<Category> currentlySelectedItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,22 +48,19 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
 
     private void init() {
 
-
         categoryStore = StoreFactory.createCategoriesStore();
 
-        //categoryStore.add(new Category("Yet Another Category", categoryStore.getById(3)));
-        categoryStore.add(new Category("Another Category", categoryStore.getById(3)));
-
         categoriesAdapter = new CategoriesAdapter(this);
-
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoriesAdapter);
 
+        currentlySelectedItems = new ArrayList<>();
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getCategories();
+                refresh();
                 swipeRefreshLayout.setColorSchemeResources(
                         R.color.blue_bright,
                         R.color.green_light,
@@ -74,39 +72,40 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), CategoryActivity.class));
-
+                startUpdatingActivity(0, CategoryActivity.class);
             }
         });
 
-        getCategories();
+        refresh();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_delete, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_delete) {
-
+        if (item.getItemId() == R.id.menu_delete_item) {
+            for (Category selectedCategory : currentlySelectedItems) {
+                categoryStore.remove(selectedCategory.getId());
+            }
+            refresh();
+            categoriesAdapter.notifyDataSetChanged();
+            /*unCheckAll();*/
             return true;
         }
         return false;
     }
 
-    private void getCategories() {
-        showProgressBar();
+    @Override
+    public void refresh() {
+        showProgressBar(swipeRefreshLayout);
         logDebug("Getting all categories.");
         categoriesAdapter.setData(categoryStore.getAll());
-        hideProgressBar();
-    }
-
-    private void logDebug(String string) {
-        Log.e(getClass().getSimpleName(), string);
-
+        hideProgressBar(swipeRefreshLayout);
     }
 
     @Override
@@ -114,8 +113,8 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
 
         logDebug(category + " clicked.");
         logDebug("Editing " + category);
-        //categoryStore.remove(category.getId());
-        getCategories();
+
+        //  refresh();
     }
 
     @Override
@@ -131,8 +130,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                         categoryStore.remove(category.getId());
                         logDebug(category + " deleted.");
                         makeShortToast("Item deleted");
-                        getCategories();
-
+                        refresh();
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -142,28 +140,34 @@ public class CategoriesActivity extends AppCompatActivity implements CategoriesA
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
 
-
-        getCategories();
+    @Override
+    public void onEditClick(Category category) {
+        logDebug(category + " clicked.");
+        startUpdatingActivity(category.getId(), CategoryActivity.class);
 
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onItemCheck(Category category) {
+        currentlySelectedItems.add(category);
+        logDebug(currentlySelectedItems.toString());
     }
 
-    private void showProgressBar() {
-        swipeRefreshLayout.setRefreshing(true);
+    @Override
+    public void onItemUnCheck(Category category) {
+        currentlySelectedItems.remove(category);
+        logDebug(currentlySelectedItems.toString());
 
     }
 
-    private void hideProgressBar() {
-        swipeRefreshLayout.setRefreshing(false);
-    }
+  /*  private void unCheckAll(){
+        for(int i=0; i<recyclerView.getChildCount(); ++i){
+
+            logDebug(recyclerView.getChildAt(i).toString());
+        }
+    }*/
 
 
-    private void makeShortToast(String string) {
-        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
-    }
 }

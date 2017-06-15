@@ -13,11 +13,11 @@
         android:textStyle="bold" />
 
     <RelativeLayout
-        android:layout_marginTop="@dimen/double_category_line_margin"
         android:id="@+id/first_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/category_view_title">
+        android:layout_below="@id/category_view_title"
+        android:layout_marginTop="@dimen/double_category_line_margin">
 
         <TextView
             android:id="@+id/category_name_label"
@@ -29,6 +29,7 @@
 
         <EditText
             android:id="@+id/category_name_input"
+            android:layout_marginStart="@dimen/text_fields_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/category_name_label"
@@ -40,36 +41,26 @@
     <RelativeLayout
         android:id="@+id/second_row"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
-        android:layout_below="@id/first_row">
+        android:layout_below="@id/first_row"
+        android:layout_marginTop="@dimen/standard_category_line_margin">
 
         <TextView
             android:id="@+id/category_parent_label"
             android:layout_width="wrap_content"
-            android:textSize="@dimen/text_field_size"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/standard_category_line_margin"
-            android:text="@string/category_parent_text" />
+            android:text="@string/category_parent_text"
+            android:textSize="@dimen/text_field_size" />
 
         <Spinner
             android:id="@+id/category_parent_spinner"
             android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/standard_category_line_margin"
+            android:layout_marginStart="@dimen/text_fields_margin"
             android:layout_toEndOf="@id/category_parent_label"
-
+            android:layout_height="wrap_content"
             />
+
+
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/button_save_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/button_save_category_label"
-        />
-
 
 </RelativeLayout>

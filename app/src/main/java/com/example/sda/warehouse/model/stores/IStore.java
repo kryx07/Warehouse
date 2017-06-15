@@ -1,6 +1,6 @@
 package com.example.sda.warehouse.model.stores;
 
-import com.example.sda.warehouse.model.Category;
+import com.example.sda.warehouse.model.beans.Category;
 
 import java.util.List;
 
@@ -14,7 +14,9 @@ public interface IStore<T> {
 
     T getById(long id);
 
-    void add(T category);
+    void add(T item);
+
+    void update(T item);
 
     void remove(long id);
 

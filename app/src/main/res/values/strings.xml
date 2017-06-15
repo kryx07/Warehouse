@@ -6,4 +6,5 @@
     <string name="category_name_text">Name</string>
     <string name="category_parent_text">Parent</string>
     <string name="button_save_category_label">save</string>
+    <string name="save">Save</string>
 </resources>

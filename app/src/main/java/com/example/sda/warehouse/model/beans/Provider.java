@@ -1,33 +1,13 @@
-package com.example.sda.warehouse.model;
+package com.example.sda.warehouse.model.beans;
 
-public class Provider {
-    private long id;
-    private String name;
+public class Provider extends Bean {
     private String tel;
     private String address;
 
     public Provider(long id, String name, String tel, String address) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.tel = tel;
         this.address = address;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getTel() {

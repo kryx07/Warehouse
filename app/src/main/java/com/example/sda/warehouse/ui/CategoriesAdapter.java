@@ -1,14 +1,17 @@
 package com.example.sda.warehouse.ui;
 
+import android.content.ClipData;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sda.warehouse.R;
-import com.example.sda.warehouse.model.Category;
+import com.example.sda.warehouse.model.beans.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +29,21 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
          * @param category to be passed .
          */
         void onCategoryClick(Category category);
+
         void onDeleteClick(Category category);
+
+        void onEditClick(Category category);
+
+       /* void onCheckBoxClick(Category category);*/
+
+        void onItemCheck(Category category);
+
+        void onItemUnCheck(Category category);
+
+
     }
+
+
 
     // TODO: 12.06.17
     /*
@@ -61,6 +77,21 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     @Override
     public void onBindViewHolder(final CategoryHolder holder, final int position) {
         holder.setCategory(categoryList.get(position));
+
+        final Category currentCategory = categoryList.get(position);
+
+        ((CategoryHolder) holder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               holder.checkBox.setChecked((holder.checkBox.isChecked())); ///?????
+                if (holder.checkBox.isChecked()) {
+                    categoryClickListener.onItemCheck(currentCategory);
+                }else {
+                    categoryClickListener.onItemUnCheck(currentCategory);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -74,8 +105,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         TextView categoryName;
         @BindView(R.id.category_parent)
         TextView categoryParent;
+
         @BindView(R.id.delete_icon)
         ImageView deleteButton;
+        @BindView(R.id.edit_icon)
+        ImageView editButton;
+        @BindView(R.id.item_checkbox)
+        CheckBox checkBox;
+
         private Category category;
 
         public CategoryHolder(View itemView) {
@@ -94,6 +131,23 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
                     categoryClickListener.onDeleteClick(category);
                 }
             });
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    categoryClickListener.onEditClick(category);
+                }
+            });
+
+
+            checkBox.setChecked(false);
+
+           /* checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    categoryClickListener.onCheckBoxClick(category);
+                }
+            });*/
+
 
         }
 
@@ -101,10 +155,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         public void setCategory(Category category) {
             this.category = category;
             categoryName.setText(category.getName());
-            categoryParent.setText("Parent: " + category.getParentCategory());
+            if (category.getParentCategory() == null) {
+                categoryParent.setText("Parent: " + "Empty");
+            } else {
+                categoryParent.setText("Parent: " + category.getParentCategory());
+            }
         }
 
+        public void setOnClickListener(View.OnClickListener onClickListener) {
+            checkBox.setOnClickListener(onClickListener);
+        }
     }
 
-
 }
+
+
