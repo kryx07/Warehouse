@@ -41,6 +41,7 @@ public class Article extends Bean {
         this.provider = provider;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public String getDetails() {
         return includeColon(MyApplication.getContext().getString(R.string.provider)) +
@@ -49,5 +50,10 @@ public class Article extends Bean {
                 this.category.toString() + System.lineSeparator() +
                 includeColon(MyApplication.getContext().getString(R.string.price)) +
                 this.price.toString();
+    }
+
+    @Override
+    public Class getUpdatingActivity() {
+        return null;
     }
 }

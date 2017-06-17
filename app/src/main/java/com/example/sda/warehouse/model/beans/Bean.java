@@ -2,28 +2,23 @@ package com.example.sda.warehouse.model.beans;
 
 import org.w3c.dom.Text;
 
-/**
- * Created by wd40 on 14.06.17.
- */
 
 public abstract class Bean {
     private long id;
     private String name;
 
 
-    public Bean(String name) {
+    Bean(String name) {
         this.name = name;
     }
 
-    public Bean(long id, String name) {
+    Bean(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Bean() {
+    Bean() {
     }
-
-    ;
 
     public long getId() {
         return id;
@@ -47,7 +42,9 @@ public abstract class Bean {
         return this.name;
     }
 
-    public String includeColon(String string) {
+    String includeColon(String string) {
         return string + ": ";
     }
+
+    public abstract Class getUpdatingActivity();
 }

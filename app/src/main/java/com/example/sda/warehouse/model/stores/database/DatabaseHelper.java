@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + ");";
 */
 
-    public DatabaseHelper() {
+    private DatabaseHelper() {
         super(MyApplication.getContext(), DATABASE_NAME, null, 1);
     }
 

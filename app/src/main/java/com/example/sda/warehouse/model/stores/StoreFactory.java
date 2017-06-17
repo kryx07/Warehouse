@@ -1,8 +1,20 @@
 package com.example.sda.warehouse.model.stores;
 
+import com.example.sda.warehouse.model.beans.Bean;
 import com.example.sda.warehouse.model.beans.Category;
 
-public class StoreFactory {
+public class StoreFactory<T extends Bean> {
+
+
+    public static IStore<?> createStore(final Class c) {
+
+        if (c == Category.class) {
+            return createCategoriesStore();
+        } else {
+            return null;
+        }
+    }
+
     public static IStore<Category> createCategoriesStore() {
         return new CategoriesStore();
     }

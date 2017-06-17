@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategoriesStore implements IStore<Category> {
+class CategoriesStore implements IStore<Category> {
 
     private DatabaseHelper databaseHelper;
 
-    public CategoriesStore() {
+    CategoriesStore() {
         this.databaseHelper = DatabaseHelper.getInstance();
     }
 

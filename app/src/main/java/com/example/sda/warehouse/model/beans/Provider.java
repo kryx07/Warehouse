@@ -29,11 +29,17 @@ public class Provider extends Bean {
         this.address = address;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public String getDetails() {
         return includeColon(MyApplication.getContext().getString(R.string.phone)) +
                 this.tel + System.lineSeparator() +
                 includeColon(MyApplication.getContext().getString(R.string.address)) +
                 this.address;
+    }
+
+    @Override
+    public Class getUpdatingActivity() {
+        return null;
     }
 }

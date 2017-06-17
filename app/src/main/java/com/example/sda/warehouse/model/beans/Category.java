@@ -1,6 +1,7 @@
 package com.example.sda.warehouse.model.beans;
 
 import com.example.sda.warehouse.R;
+import com.example.sda.warehouse.activities.CategoryActivity;
 import com.example.sda.warehouse.utils.MyApplication;
 
 import java.util.List;
@@ -47,11 +48,17 @@ public class Category extends Bean {
         return position;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public String getDetails() {
         return parentCategory == null ? getContext().getString(R.string.empty) :
                 includeColon(getContext().getString(R.string.parent)) +
                         this.parentCategory.toString();
+    }
+
+    @Override
+    public Class getUpdatingActivity() {
+        return CategoryActivity.class;
     }
 
     @Override
