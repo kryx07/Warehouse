@@ -25,7 +25,7 @@
             android:layout_marginEnd="10dp" />
 
         <TextView
-            android:id="@+id/category_name"
+            android:id="@+id/item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -36,10 +36,10 @@
             tools:text="Coca cola light" />
 
         <TextView
-            android:id="@+id/category_parent"
+            android:id="@+id/item_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/category_name"
+            android:layout_below="@id/item_title"
             android:layout_marginEnd="24dp"
             android:layout_toEndOf="@id/item_checkbox"
             android:textAllCaps="false"

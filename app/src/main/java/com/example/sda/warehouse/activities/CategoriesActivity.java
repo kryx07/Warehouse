@@ -15,7 +15,7 @@ import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.model.beans.Category;
 import com.example.sda.warehouse.model.stores.IStore;
 import com.example.sda.warehouse.model.stores.StoreFactory;
-import com.example.sda.warehouse.ui.CategoriesAdapter;
+import com.example.sda.warehouse.ui.ItemsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategoriesActivity extends RefreshableActivity implements CategoriesAdapter.CategoryClickListener {
+public class CategoriesActivity extends RefreshableActivity implements ItemsAdapter.ItemClickListener<Category> {
 
     @BindView(R.id.categories_recycler)
     RecyclerView recyclerView;
@@ -33,7 +33,7 @@ public class CategoriesActivity extends RefreshableActivity implements Categorie
     FloatingActionButton floatingActionButton;
 
     private IStore<Category> categoryStore;
-    private CategoriesAdapter categoriesAdapter;
+    private ItemsAdapter<Category> categoriesAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private List<Category> currentlySelectedItems;
@@ -50,7 +50,7 @@ public class CategoriesActivity extends RefreshableActivity implements Categorie
 
         categoryStore = StoreFactory.createCategoriesStore();
 
-        categoriesAdapter = new CategoriesAdapter(this);
+        categoriesAdapter = new ItemsAdapter(this);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(categoriesAdapter);
@@ -124,7 +124,7 @@ public class CategoriesActivity extends RefreshableActivity implements Categorie
     }
 
     @Override
-    public void onCategoryClick(Category category) {
+    public void onItemClick(Category category) {
 
         logDebug(category + " clicked.");
         logDebug("Editing " + category);
