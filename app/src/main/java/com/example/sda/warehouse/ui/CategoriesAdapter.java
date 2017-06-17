@@ -34,8 +34,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
         void onEditClick(Category category);
 
-       /* void onCheckBoxClick(Category category);*/
-
         void onItemCheck(Category category);
 
         void onItemUnCheck(Category category);
@@ -43,13 +41,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     }
 
-
-
-    // TODO: 12.06.17
-    /*
-    List of checked boxed to be implemented
-    https://stackoverflow.com/questions/33434626/get-list-of-checked-checkboxes-from-recyclerview-android
-     */
 
     public CategoriesAdapter(CategoryClickListener categoryClickListener) {
         this.categoryClickListener = categoryClickListener;
@@ -79,6 +70,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         holder.setCategory(categoryList.get(position));
 
         final Category currentCategory = categoryList.get(position);
+
+        holder.checkBox.setChecked(false);
 
         ((CategoryHolder) holder).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +132,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             });
 
 
-            checkBox.setChecked(false);
+          /*  checkBox.setChecked(false);*/
 
            /* checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override

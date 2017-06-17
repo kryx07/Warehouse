@@ -11,14 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CategoriesActivity" />
-        <activity android:name=".activities.CategoryActivity" />
+        <activity android:name=".activities.CategoriesActivity"
+            android:label="Categories List"
+            />
+        <activity android:name=".activities.CategoryActivity"
+            android:label="Category Details"
+            />
 
     </application>
 

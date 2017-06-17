@@ -89,13 +89,28 @@ public class CategoriesActivity extends RefreshableActivity implements Categorie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_delete_item) {
-            for (Category selectedCategory : currentlySelectedItems) {
-                categoryStore.remove(selectedCategory.getId());
+            if (currentlySelectedItems.size() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Delete multiple categories")
+                        .setMessage("Are you sure you want to delete those entries?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                for (Category selectedCategory : currentlySelectedItems) {
+                                    categoryStore.remove(selectedCategory.getId());
+                                }
+                                refresh();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                logDebug("Nothing deleted.");
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                //categoriesAdapter.notifyDataSetChanged();
+                return true;
             }
-            refresh();
-            categoriesAdapter.notifyDataSetChanged();
-            /*unCheckAll();*/
-            return true;
         }
         return false;
     }
@@ -161,13 +176,5 @@ public class CategoriesActivity extends RefreshableActivity implements Categorie
         logDebug(currentlySelectedItems.toString());
 
     }
-
-  /*  private void unCheckAll(){
-        for(int i=0; i<recyclerView.getChildCount(); ++i){
-
-            logDebug(recyclerView.getChildAt(i).toString());
-        }
-    }*/
-
 
 }
