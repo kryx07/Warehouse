@@ -1,12 +1,10 @@
 package com.example.sda.warehouse.ui;
 
-import android.content.ClipData;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,11 +21,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
 
     public interface CategoryClickListener {
-        /**
-         * Called when an item is clicked.
-         *
-         * @param category to be passed .
-         */
+
         void onCategoryClick(Category category);
 
         void onDeleteClick(Category category);
@@ -37,7 +31,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         void onItemCheck(Category category);
 
         void onItemUnCheck(Category category);
-
 
     }
 
@@ -73,13 +66,13 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
         holder.checkBox.setChecked(false);
 
-        ((CategoryHolder) holder).setOnClickListener(new View.OnClickListener() {
+        holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               holder.checkBox.setChecked((holder.checkBox.isChecked())); ///?????
+                holder.checkBox.setChecked((holder.checkBox.isChecked())); ///?????
                 if (holder.checkBox.isChecked()) {
                     categoryClickListener.onItemCheck(currentCategory);
-                }else {
+                } else {
                     categoryClickListener.onItemUnCheck(currentCategory);
                 }
             }
@@ -108,7 +101,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
         private Category category;
 
-        public CategoryHolder(View itemView) {
+        CategoryHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -131,31 +124,16 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
                 }
             });
 
-
-          /*  checkBox.setChecked(false);*/
-
-           /* checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    categoryClickListener.onCheckBoxClick(category);
-                }
-            });*/
-
-
         }
 
 
         public void setCategory(Category category) {
             this.category = category;
             categoryName.setText(category.getName());
-            if (category.getParentCategory() == null) {
-                categoryParent.setText("Parent: " + "Empty");
-            } else {
-                categoryParent.setText("Parent: " + category.getParentCategory());
-            }
+            categoryParent.setText(category.getDetails());
         }
 
-        public void setOnClickListener(View.OnClickListener onClickListener) {
+        void setOnClickListener(View.OnClickListener onClickListener) {
             checkBox.setOnClickListener(onClickListener);
         }
     }

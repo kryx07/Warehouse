@@ -1,10 +1,12 @@
 package com.example.sda.warehouse.model.beans;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by wd40 on 14.06.17.
  */
 
-public class Bean {
+public abstract class Bean {
     private long id;
     private String name;
 
@@ -37,5 +39,15 @@ public class Bean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public abstract String getDetails();
+
+    public String getTitle() {
+        return this.name;
+    }
+
+    public String includeColon(String string) {
+        return string + ": ";
     }
 }

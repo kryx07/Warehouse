@@ -4,7 +4,17 @@
     <string name="categories">Categories</string>
     <string name="category">Category</string>
     <string name="category_name_text">Name</string>
-    <string name="category_parent_text">Parent</string>
+    <string name="parent">Parent</string>
     <string name="button_save_category_label">save</string>
     <string name="save">Save</string>
+
+    <string name="provider">Provider</string>
+    <string name="price">Price</string>
+
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+
+    <string name="empty">empty</string>
+
+
 </resources>

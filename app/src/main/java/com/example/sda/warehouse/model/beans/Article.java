@@ -1,5 +1,8 @@
 package com.example.sda.warehouse.model.beans;
 
+import com.example.sda.warehouse.R;
+import com.example.sda.warehouse.utils.MyApplication;
+
 import java.math.BigDecimal;
 
 public class Article extends Bean {
@@ -36,5 +39,15 @@ public class Article extends Bean {
 
     public void setProvider(Provider provider) {
         this.provider = provider;
+    }
+
+    @Override
+    public String getDetails() {
+        return includeColon(MyApplication.getContext().getString(R.string.provider)) +
+                this.provider.toString() + System.lineSeparator() +
+                includeColon(MyApplication.getContext().getString(R.string.category)) +
+                this.category.toString() + System.lineSeparator() +
+                includeColon(MyApplication.getContext().getString(R.string.price)) +
+                this.price.toString();
     }
 }

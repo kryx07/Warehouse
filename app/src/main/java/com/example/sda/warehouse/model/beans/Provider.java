@@ -1,5 +1,8 @@
 package com.example.sda.warehouse.model.beans;
 
+import com.example.sda.warehouse.R;
+import com.example.sda.warehouse.utils.MyApplication;
+
 public class Provider extends Bean {
     private String tel;
     private String address;
@@ -24,5 +27,13 @@ public class Provider extends Bean {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String getDetails() {
+        return includeColon(MyApplication.getContext().getString(R.string.phone)) +
+                this.tel + System.lineSeparator() +
+                includeColon(MyApplication.getContext().getString(R.string.address)) +
+                this.address;
     }
 }

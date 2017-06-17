@@ -1,6 +1,11 @@
 package com.example.sda.warehouse.model.beans;
 
+import com.example.sda.warehouse.R;
+import com.example.sda.warehouse.utils.MyApplication;
+
 import java.util.List;
+
+import static com.example.sda.warehouse.utils.MyApplication.*;
 
 public class Category extends Bean {
     private Category parentCategory;
@@ -42,6 +47,12 @@ public class Category extends Bean {
         return position;
     }
 
+    @Override
+    public String getDetails() {
+        return parentCategory == null ? getContext().getString(R.string.empty) :
+                includeColon(getContext().getString(R.string.parent)) +
+                        this.parentCategory.toString();
+    }
 
     @Override
     public String toString() {
