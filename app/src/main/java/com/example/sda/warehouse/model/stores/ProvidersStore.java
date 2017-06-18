@@ -60,7 +60,7 @@ class ProvidersStore implements IStore<Provider> {
 
     @Override
     public Provider getEmpty() {
-        return new Provider();
+        return new Provider(0, "Empty", "", "");
     }
 
     private List<Provider> getAllFromCursor(Cursor cursor) {

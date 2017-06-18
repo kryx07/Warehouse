@@ -45,11 +45,13 @@ public abstract class UpdatingActivity<T> extends AppCompatActivity {
 
     }
 
+    protected abstract void init();
+
     protected abstract void populateViewFromIntent();
 
     protected abstract boolean areAllFieldsPopulated();
 
-    protected abstract T populateItemFromView();
+    protected abstract T getItemFromView();
 
 
     @Override

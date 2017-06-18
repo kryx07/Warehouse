@@ -4,6 +4,7 @@ import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.activities.category.CategoryActivity;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.sda.warehouse.utils.MyApplication.*;
 
@@ -22,8 +23,6 @@ public class Category extends Bean {
 
     public Category() {
     }
-
-    public static final Category EMPTY_CATEGORY = new Category(0, "Empty", null);
 
     public Category getParentCategory() {
         return parentCategory;
@@ -63,5 +62,18 @@ public class Category extends Bean {
     @Override
     public String toString() {
         return getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return getId() == category.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

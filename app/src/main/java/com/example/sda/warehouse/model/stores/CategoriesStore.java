@@ -30,7 +30,26 @@ class CategoriesStore implements IStore<Category> {
                 new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.PARENT_ID_COL},
                 DatabaseHelper.ID_COL + "!=" + withoutId, null, null, null, null, null);
 
-        return getCategoriesFromCursor(cursor);
+        List<Category> tmpCategoriesList = getCategoriesFromCursor(cursor);
+        List<Category> categoriesList = new ArrayList<>();
+
+        Category withoutCategory = getById(withoutId);
+        for (int i = 0; i < tmpCategoriesList.size(); ++i) {
+            if (!containsParent(tmpCategoriesList.get(i), withoutCategory)) {
+                categoriesList.add(tmpCategoriesList.get(i));
+            }
+        }
+        return categoriesList;
+    }
+
+    private boolean containsParent(Category category, Category parentCategory) {
+        if (category.getParentCategory() == null) {
+            return false;
+        } else if (category.getParentCategory().equals(parentCategory)) {
+            return true;
+        } else {
+            return containsParent(category.getParentCategory(), parentCategory);
+        }
     }
 
 
@@ -47,7 +66,7 @@ class CategoriesStore implements IStore<Category> {
 
     @Override
     public Category getById(long id) {
-        if (id == 0) {
+        if (id <= 0) {
             return null;
         }
         Cursor cursor = databaseHelper.getReadableDatabase().query(
@@ -59,7 +78,7 @@ class CategoriesStore implements IStore<Category> {
 
     @Override
     public Category getEmpty() {
-        return new Category();
+        return new Category(0, "Empty", null);
     }
 
     private List<Category> getCategoriesFromCursor(Cursor cursor) {
