@@ -18,12 +18,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CategoriesActivity"
-            android:label="Categories List"
-            />
-        <activity android:name=".activities.CategoryActivity"
-            android:label="Category Details"
-            />
+        <activity
+            android:name=".activities.category.CategoriesActivity"
+            android:label="Categories List" />
+        <activity
+            android:name=".activities.category.CategoryActivity"
+            android:label="Category Details" />
+        <activity
+            android:name=".activities.provider.ProvidersActivity"
+            android:label="Providers List" />
+        <activity
+            android:name=".activities.provider.ProviderActivity"
+            android:label="Provider Details" />
 
     </application>
 

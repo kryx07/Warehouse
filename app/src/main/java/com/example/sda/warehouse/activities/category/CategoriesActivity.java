@@ -1,7 +1,8 @@
-package com.example.sda.warehouse.activities;
+package com.example.sda.warehouse.activities.category;
 
 import android.os.Bundle;
 
+import com.example.sda.warehouse.activities.common.RecyclableActivity;
 import com.example.sda.warehouse.model.beans.Category;
 
 public class CategoriesActivity extends RecyclableActivity<Category> {

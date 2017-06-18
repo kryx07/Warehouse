@@ -1,8 +1,7 @@
 package com.example.sda.warehouse.model.beans;
 
 import com.example.sda.warehouse.R;
-import com.example.sda.warehouse.activities.CategoryActivity;
-import com.example.sda.warehouse.utils.MyApplication;
+import com.example.sda.warehouse.activities.category.CategoryActivity;
 
 import java.util.List;
 

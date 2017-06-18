@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/categories" />
 
-    <!--<Button
+    <Button
         android:id="@+id/providers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_below="@+id/categories"
         android:text="@string/providers" />
 
-    <Button
+    <!--<Button
         android:id="@+id/articles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

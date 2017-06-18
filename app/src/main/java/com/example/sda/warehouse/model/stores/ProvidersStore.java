@@ -2,13 +2,12 @@ package com.example.sda.warehouse.model.stores;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.example.sda.warehouse.model.beans.Category;
 import com.example.sda.warehouse.model.beans.Provider;
 import com.example.sda.warehouse.model.stores.database.DatabaseHelper;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +27,8 @@ class ProvidersStore implements IStore<Provider> {
 
     @Override
     public List<Provider> getWithoutId(long withoutId) {
-        Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.CATEGORY_TABLE_NAME,
-                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
+        Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.PROVIDERS_TABLE_NAME,
+                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
                 DatabaseHelper.ID_COL + "!=" + withoutId, null, null, null, null, null);
 
         return getAllFromCursor(cursor);
@@ -39,7 +38,7 @@ class ProvidersStore implements IStore<Provider> {
     @Override
     public List<Provider> getAll(String column, String order) {
         Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.PROVIDERS_TABLE_NAME,
-                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
+                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
                 null, null, null, null,
                 column + " " + order,
                 null);
@@ -54,9 +53,14 @@ class ProvidersStore implements IStore<Provider> {
         }
         Cursor cursor = databaseHelper.getReadableDatabase().query(
                 DatabaseHelper.PROVIDERS_TABLE_NAME,
-                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.PARENT_ID_COL},
+                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
                 DatabaseHelper.ID_COL + " = " + id, null, null, null, null);
         return cursor.getCount() == 0 ? null : getAllFromCursor(cursor).get(0);
+    }
+
+    @Override
+    public Provider getEmpty() {
+        return new Provider();
     }
 
     private List<Provider> getAllFromCursor(Cursor cursor) {
@@ -68,6 +72,7 @@ class ProvidersStore implements IStore<Provider> {
             Provider providerRecord = new Provider();
             providerRecord.setId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.ID_COL)));
             providerRecord.setName(cursor.getString(cursor.getColumnIndex(DatabaseHelper.NAME_COL)));
+            providerRecord.setTel(cursor.getString(cursor.getColumnIndex(DatabaseHelper.TELEPHONE_COL)));
             providerRecord.setAddress(cursor.getString(cursor.getColumnIndex(DatabaseHelper.ADDRESS_COL)));
             providers.add(providerRecord);
             cursor.moveToNext();
@@ -81,6 +86,8 @@ class ProvidersStore implements IStore<Provider> {
 
     @Override
     public void add(Provider provider) {
+
+        logDebug("Adding " + provider);
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.NAME_COL, provider.getName());
         contentValues.put(DatabaseHelper.TELEPHONE_COL, provider.getTel());
@@ -101,6 +108,8 @@ class ProvidersStore implements IStore<Provider> {
         contentValues.put(DatabaseHelper.NAME_COL, provider.getName());
         contentValues.put(DatabaseHelper.TELEPHONE_COL, provider.getTel());
         contentValues.put(DatabaseHelper.ADDRESS_COL, provider.getAddress());
+
+        logDebug(contentValues.toString());
 
         this.databaseHelper
                 .getWritableDatabase()

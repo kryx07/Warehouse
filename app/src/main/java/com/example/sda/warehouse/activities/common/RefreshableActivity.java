@@ -1,4 +1,4 @@
-package com.example.sda.warehouse.activities;
+package com.example.sda.warehouse.activities.common;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -6,16 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.sda.warehouse.R;
+import com.example.sda.warehouse.model.stores.database.DatabaseHelper;
+import com.example.sda.warehouse.utils.MyApplication;
+
 public abstract class RefreshableActivity extends AppCompatActivity {
+
     public final static int EDIT = 87;
     public final static int ADD = 88;
-    public final static String REQUEST_CODE = "Request code";
+
+    @SuppressWarnings("ConstantConditions")
+    public final static String REQUEST_CODE = MyApplication.getContext().getString(R.string.request_code);
 
     public abstract void refresh();
 
     public void startUpdatingActivity(long id, Class updatingActivityClass) {
         Intent intent = new Intent(getApplicationContext(), updatingActivityClass);
-        intent.putExtra("id", id);
+        intent.putExtra(DatabaseHelper.ID_COL, id);
         if (id > 0) {
             intent.putExtra(REQUEST_CODE, EDIT);
             startActivityForResult(intent, EDIT);

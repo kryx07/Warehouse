@@ -14,6 +14,8 @@ public interface IStore<T> {
 
     T getById(long id);
 
+    T getEmpty();
+
     void add(T item);
 
     void update(T item);

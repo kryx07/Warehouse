@@ -1,4 +1,4 @@
-package com.example.sda.warehouse.activities;
+package com.example.sda.warehouse.activities.common;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -37,6 +37,8 @@ public class RecyclableActivity<T extends Bean> extends RefreshableActivity impl
     private ItemsAdapter itemsAdapter;
     private List<T> currentlySelectedItems;
 
+    private T emptyItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,7 @@ public class RecyclableActivity<T extends Bean> extends RefreshableActivity impl
     private void init() {
 
         initStore();
+        emptyItem = itemsStore.getEmpty();
 
         itemsAdapter = new ItemsAdapter(this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -62,19 +65,16 @@ public class RecyclableActivity<T extends Bean> extends RefreshableActivity impl
                 refresh();
                 swipeRefreshLayout.setColorSchemeResources(
                         R.color.blue_bright,
-                        R.color.green_light,
-                        R.color.orange_light,
-                        R.color.red_light);
+                        R.color.green_light);
                 floatingActionButton.show();
             }
         });
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startUpdatingActivity(0, CategoryActivity.class);
+                startUpdatingActivity(0, emptyItem.getUpdatingActivity());
             }
         });
-
         refresh();
     }
 
@@ -117,7 +117,6 @@ public class RecyclableActivity<T extends Bean> extends RefreshableActivity impl
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-                //itemsAdapter.notifyDataSetChanged();
                 return true;
             }
         }

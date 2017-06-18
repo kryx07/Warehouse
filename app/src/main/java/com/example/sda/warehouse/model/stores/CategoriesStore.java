@@ -57,6 +57,11 @@ class CategoriesStore implements IStore<Category> {
         return cursor.getCount() == 0 ? null : getCategoriesFromCursor(cursor).get(0);
     }
 
+    @Override
+    public Category getEmpty() {
+        return new Category();
+    }
+
     private List<Category> getCategoriesFromCursor(Cursor cursor) {
 
         cursor.moveToFirst();
@@ -121,7 +126,6 @@ class CategoriesStore implements IStore<Category> {
         databaseHelper.getWritableDatabase().delete(DatabaseHelper.CATEGORY_TABLE_NAME, DatabaseHelper.ID_COL + " = " + id, null);
         databaseHelper.close();
     }
-
 
 
     private void logDebug(String string) {

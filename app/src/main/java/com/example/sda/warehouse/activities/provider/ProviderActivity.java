@@ -1,32 +1,10 @@
-package com.example.sda.warehouse.activities;
+package com.example.sda.warehouse.activities.provider;
 
-import android.content.Intent;
-import android.graphics.Paint;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.example.sda.warehouse.R;
-import com.example.sda.warehouse.model.beans.Category;
-import com.example.sda.warehouse.model.stores.IStore;
-import com.example.sda.warehouse.model.stores.StoreFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
-public class CategoryActivity extends AppCompatActivity {
-
+public class ProviderActivity extends AppCompatActivity {
+/*
 
     @BindView(R.id.category_name_input)
     EditText categoryNameTextField;
@@ -49,7 +27,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     private void init() {
         //intent
-        id = getIntent().getLongExtra("id", 0);
+        id = getIntent().getLongExtra(DatabaseHelper.ID_COL, 0);
         requestCode = getIntent().getIntExtra(RefreshableActivity.REQUEST_CODE, -1);
 
         store = StoreFactory.createCategoriesStore();
@@ -61,7 +39,7 @@ public class CategoryActivity extends AppCompatActivity {
         parentsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         parentCategorySpinner.setAdapter(parentsAdapter);
 
-        if (requestCode == RefreshableActivity.EDIT) {
+        if (requestCode == RecyclableActivity.EDIT) {
             category = store.getById(id);
             categoryNameTextField.setText(category.getName());
             int parentPosition;
@@ -80,7 +58,7 @@ public class CategoryActivity extends AppCompatActivity {
     private void update() {
         Category parentCategory = (Category) parentCategorySpinner.getSelectedItem();
         if (categoryNameTextField.getText().length() != 0) {
-            if (requestCode == RefreshableActivity.EDIT) {
+            if (requestCode == RecyclableActivity.EDIT) {
                 category.setName(categoryNameTextField.getText().toString());
                 category.setParentCategory(parentCategory);
                 store.update(category);
@@ -133,5 +111,5 @@ public class CategoryActivity extends AppCompatActivity {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
         Log.e(getClass().getSimpleName(), string);
 
-    }
+    }*/
 }

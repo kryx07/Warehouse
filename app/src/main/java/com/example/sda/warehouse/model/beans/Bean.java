@@ -1,8 +1,5 @@
 package com.example.sda.warehouse.model.beans;
 
-import org.w3c.dom.Text;
-
-
 public abstract class Bean {
     private long id;
     private String name;
