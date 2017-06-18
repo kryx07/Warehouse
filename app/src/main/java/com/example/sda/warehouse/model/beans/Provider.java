@@ -13,6 +13,10 @@ public class Provider extends Bean {
         this.address = address;
     }
 
+    public Provider() {
+    }
+
+
     public String getTel() {
         return tel;
     }

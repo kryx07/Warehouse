@@ -8,7 +8,7 @@ public interface IStore<T> {
 
     List<T> getAll();
 
-    List<Category> getWithoutId(long withoutId);
+    List<T> getWithoutId(long withoutId);
 
     List<T> getAll(String column, String order);
 

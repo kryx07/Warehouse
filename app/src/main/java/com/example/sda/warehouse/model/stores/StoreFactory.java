@@ -1,17 +1,21 @@
 package com.example.sda.warehouse.model.stores;
 
-import com.example.sda.warehouse.model.beans.Bean;
+import com.example.sda.warehouse.model.beans.Article;
 import com.example.sda.warehouse.model.beans.Category;
+import com.example.sda.warehouse.model.beans.Provider;
 
-public class StoreFactory<T extends Bean> {
+import static com.example.sda.warehouse.model.stores.StoreFactory.BeanClass.getBeanFromClass;
 
+public class StoreFactory {
 
-    public static IStore<?> createStore(final Class c) {
-
-        if (c == Category.class) {
-            return createCategoriesStore();
-        } else {
-            return null;
+    public static IStore<?> createStore(final Class clazz) {
+        switch (getBeanFromClass(clazz)) {
+            case CATEGORY:
+                return createCategoriesStore();
+            case PROVIDER:
+                return createProvidersStore();
+            default:
+                return null;
         }
     }
 
@@ -19,11 +23,39 @@ public class StoreFactory<T extends Bean> {
         return new CategoriesStore();
     }
 
-   /* public static IStore<Provider> createProvidersStore() {
-        return new ProvidersStore(new DatabaseHelper(Application.get().getApplicationContext()));
+    public static IStore<Provider> createProvidersStore() {
+        return new ProvidersStore();
     }
 
+    private static String getClassName(Class clazz) {
+        return clazz.getSimpleName();
+    }
+/*
     public static IStore<Article> createArticlesStore(IStore<Category> categoriesStore, IStore<Provider> providersStore) {
         return new ArticlesStore(new DatabaseHelper(Application.get().getApplicationContext()), categoriesStore, providersStore);
     }*/
+
+    enum BeanClass {
+
+        CATEGORY(Category.class),
+        PROVIDER(Provider.class),
+        ARTICLE(Article.class),
+        EMPTY(Object.class);
+
+        Class clazz;
+
+        BeanClass(Class clazz) {
+            this.clazz = clazz;
+        }
+
+        public static BeanClass getBeanFromClass(Class clazz) {
+            for (BeanClass b : values()) {
+                if (b.clazz.equals(clazz)) {
+                    return b;
+                }
+            }
+            return EMPTY;
+        }
+    }
 }
+

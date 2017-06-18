@@ -1,14 +1,17 @@
 package com.example.sda.warehouse.activities;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.model.beans.Category;
@@ -26,7 +29,7 @@ public class CategoryActivity extends AppCompatActivity {
 
 
     @BindView(R.id.category_name_input)
-    EditText categoryName;
+    EditText categoryNameTextField;
     @BindView(R.id.category_parent_spinner)
     Spinner parentCategorySpinner;
 
@@ -60,7 +63,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         if (requestCode == RefreshableActivity.EDIT) {
             category = store.getById(id);
-            categoryName.setText(category.getName());
+            categoryNameTextField.setText(category.getName());
             int parentPosition;
             if (category.getParentCategory() == null) {
                 parentPosition = 0;
@@ -76,14 +79,20 @@ public class CategoryActivity extends AppCompatActivity {
 
     private void update() {
         Category parentCategory = (Category) parentCategorySpinner.getSelectedItem();
-        if (requestCode == RefreshableActivity.EDIT) {
-            category.setName(categoryName.getText().toString());
-            category.setParentCategory(parentCategory);
-            store.update(category);
+        if (categoryNameTextField.getText().length() != 0) {
+            if (requestCode == RefreshableActivity.EDIT) {
+                category.setName(categoryNameTextField.getText().toString());
+                category.setParentCategory(parentCategory);
+                store.update(category);
+            } else {
+                store.add(new Category(categoryNameTextField.getText().toString(), parentCategory));
+            }
+            finishActivityWithOKResult();
+
         } else {
-            store.add(new Category(categoryName.getText().toString(), parentCategory));
+            //categoryNameTextField.setPaintFlags(categoryNameTextField.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            logAndToast("Category name cannot be empty");
         }
-        finishActivityWithOKResult();
 
     }
 
@@ -118,5 +127,11 @@ public class CategoryActivity extends AppCompatActivity {
         Intent intent = new Intent();
         setResult(RESULT_CANCELED, intent);
         finish();
+    }
+
+    public void logAndToast(String string) {
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+        Log.e(getClass().getSimpleName(), string);
+
     }
 }

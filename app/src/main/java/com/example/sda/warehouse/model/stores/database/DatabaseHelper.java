@@ -14,10 +14,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "warehouse.db";
     private static final int DATABASE_VERSION = 1;
 
-    public static final String CATEGORY_TABLE_NAME = "Category";
+    public static final String CATEGORY_TABLE_NAME = "Categories";
     public static final String ID_COL = "_id";
     public static final String NAME_COL = "name";
     public static final String PARENT_ID_COL = "id_parent";
+
+    public static final String PROVIDERS_TABLE_NAME = "Providers";
+    public static final String TELEPHONE_COL = "telephone";
+    public static final String ADDRESS_COL = "address";
+
+    public static final String ARTICLES_TABLE_NAME = "Articles";
+    public static final String PRICE_COL = "price";
+    public static final String CATEGORY_ID_COL = "category_id";
+    public static final String PROVIDER_ID_COL = "provider_id";
+
+    public static final String SORT_DESC = "DESC";
+    public static final String SORT_ASC = "ASC";
 
     private static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE " + CATEGORY_TABLE_NAME + " ("
             + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -25,21 +37,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PARENT_ID_COL + " INTEGER NULL"
             + ");";
 
-    /*private static final String CREATE_TABLE_PROVIDERS = "CREATE TABLE " + TABLE_PROVIDERS + " ("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_NAME + " TEXT, "
-            + COLUMN_TELEPHONE + " TEXT, "
-            + COLUMN_ADDRESS + " TEXT "
+    private static final String CREATE_TABLE_PROVIDERS = "CREATE TABLE " + PROVIDERS_TABLE_NAME + " ("
+            + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + NAME_COL + " TEXT, "
+            + TELEPHONE_COL + " TEXT, "
+            + ADDRESS_COL + " TEXT "
             + ");";
 
-    private static final String CREATE_TABLE_ARTICLES = "CREATE TABLE " + TABLE_ARTICLES + " ("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_NAME + " TEXT, "
-            + COLUMN_PRICE + " FLOAT, "
-            + COLUMN_CATEGORY_ID + " INTEGER, "
-            + COLUMN_PROVIDER_ID + " INTEGER "
+    private static final String CREATE_TABLE_ARTICLES = "CREATE TABLE " + ARTICLES_TABLE_NAME + " ("
+            + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + NAME_COL + " TEXT, "
+            + PRICE_COL + " FLOAT, "
+            + CATEGORY_ID_COL + " INTEGER, "
+            + PROVIDER_ID_COL + " INTEGER "
             + ");";
-*/
+
 
     private DatabaseHelper() {
         super(MyApplication.getContext(), DATABASE_NAME, null, 1);
@@ -52,6 +64,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         databaseHelper = this;
 
         sqLiteDatabase.execSQL(CREATE_TABLE_CATEGORIES);
+        sqLiteDatabase.execSQL(CREATE_TABLE_PROVIDERS);
+        sqLiteDatabase.execSQL(CREATE_TABLE_ARTICLES);
     }
 
     public static DatabaseHelper getInstance() {
@@ -66,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
 
 

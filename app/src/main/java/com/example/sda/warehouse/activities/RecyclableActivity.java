@@ -106,12 +106,13 @@ public class RecyclableActivity<T extends Bean> extends RefreshableActivity impl
                                 for (T selectedCategory : currentlySelectedItems) {
                                     itemsStore.remove(selectedCategory.getId());
                                 }
+                                logAndToast("Item deleted");
                                 refresh();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                logDebug("Nothing deleted.");
+                                logDebug("Nothing deleted");
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
