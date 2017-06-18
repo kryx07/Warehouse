@@ -1,4 +1,4 @@
-package com.example.sda.warehouse.activities.category;
+package com.example.sda.warehouse.activities.article;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class CategoryActivity extends UpdatingActivity<Category> {
+public class ArticleActivity extends UpdatingActivity<Category> {
 
     @BindView(R.id.category_name_input)
     EditText categoryNameInput;

@@ -14,6 +14,8 @@ public class StoreFactory {
                 return createCategoriesStore();
             case PROVIDER:
                 return createProvidersStore();
+            case ARTICLE:
+                return createArticlesStore();
             default:
                 return null;
         }
@@ -30,10 +32,9 @@ public class StoreFactory {
     private static String getClassName(Class clazz) {
         return clazz.getSimpleName();
     }
-/*
-    public static IStore<Article> createArticlesStore(IStore<Category> categoriesStore, IStore<Provider> providersStore) {
-        return new ArticlesStore(new DatabaseHelper(Application.get().getApplicationContext()), categoriesStore, providersStore);
-    }*/
+    public static IStore<Article> createArticlesStore() {
+        return new ArticlesStore();
+    }
 
     enum BeanClass {
 

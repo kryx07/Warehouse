@@ -1,6 +1,7 @@
 package com.example.sda.warehouse.model.beans;
 
 import com.example.sda.warehouse.R;
+import com.example.sda.warehouse.activities.article.ArticleActivity;
 import com.example.sda.warehouse.utils.MyApplication;
 
 import java.math.BigDecimal;
@@ -54,6 +55,6 @@ public class Article extends Bean {
 
     @Override
     public Class getUpdatingActivity() {
-        return null;
+        return ArticleActivity.class;
     }
 }

@@ -59,6 +59,7 @@
             android:id="@+id/provider_phone_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_line_margin"
             android:labelFor="@id/provider_phone_input"
             android:text="@string/phone"
             android:textSize="@dimen/text_field_size" />
@@ -86,6 +87,7 @@
             android:id="@+id/provider_address_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_line_margin"
             android:labelFor="@id/provider_address_input"
             android:text="@string/address"
             android:textSize="@dimen/text_field_size" />

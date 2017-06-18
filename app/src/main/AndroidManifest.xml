@@ -30,6 +30,12 @@
         <activity
             android:name=".activities.provider.ProviderActivity"
             android:label="Provider Details" />
+        <activity
+            android:name=".activities.article.ArticlesActivity"
+            android:label="Articles List" />
+        <activity
+            android:name=".activities.article.ArticleActivity"
+            android:label="Article Details" />
 
     </application>
 
