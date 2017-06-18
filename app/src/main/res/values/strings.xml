@@ -3,7 +3,7 @@
     <string name="delete">Delete</string>
     <string name="categories">Categories</string>
     <string name="category">Category</string>
-    <string name="category_name_text">Name</string>
+    <string name="name_text">Name</string>
     <string name="parent">Parent</string>
     <string name="button_save_category_label">save</string>
     <string name="save">Save</string>

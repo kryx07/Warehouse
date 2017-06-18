@@ -11,8 +11,8 @@ public class ProvidersActivity extends RecyclableActivity<Provider> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StoreFactory.createProvidersStore().add(new Provider("Dupex","90 00 800 123 456","ul. dupna 6/9"));
-        refresh();
+        //StoreFactory.createProvidersStore().add(new Provider("Dupex","90 00 800 123 456","ul. dupna 6/9"));
+        //refresh();
     }
 
 }
