@@ -1,7 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="standard_line_margin">10dp</dimen>
-    <dimen name="double_category_line_margin">20dp</dimen>
+    <dimen name="double_line_margin">20dp</dimen>
     <dimen name="triple_category_line_margin">30dp</dimen>
     <dimen name="text_title_size">20sp</dimen>
     <dimen name="text_field_size">18sp</dimen>

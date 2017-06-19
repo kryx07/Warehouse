@@ -5,6 +5,7 @@ import com.example.sda.warehouse.activities.article.ArticleActivity;
 import com.example.sda.warehouse.utils.MyApplication;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Article extends Bean {
     private BigDecimal price;
@@ -53,15 +54,38 @@ public class Article extends Bean {
         this.provider = provider;
     }
 
+    public static int getPositionById(long id, List<Article> list) {
+        int position = -1;
+
+        for (int i = 0; i < list.size(); ++i) {
+            Article article = list.get(i);
+            if (article.getId() == id) {
+                position = i;
+                break;
+            }
+        }
+
+        return position;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "price=" + price +
+                ", category=" + category +
+                ", provider=" + provider +
+                '}';
+    }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public String getDetails() {
-        return includeColon(MyApplication.getContext().getString(R.string.provider)) +
-                this.provider.toString() + System.lineSeparator() +
+        return includeColon(MyApplication.getContext().getString(R.string.price)) +
+                this.price.toString() + System.lineSeparator() +
                 includeColon(MyApplication.getContext().getString(R.string.category)) +
                 this.category.toString() + System.lineSeparator() +
-                includeColon(MyApplication.getContext().getString(R.string.price)) +
-                this.price.toString();
+                includeColon(MyApplication.getContext().getString(R.string.provider)) +
+                this.provider.toString();
     }
 
     @Override

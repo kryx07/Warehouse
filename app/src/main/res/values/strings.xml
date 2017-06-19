@@ -18,6 +18,7 @@
     <string name="request_code">Request code</string>
     <string name="providers">Providers</string>
     <string name="articles">Articles</string>
+    <string name="article">Article</string>
 
 
 </resources>

@@ -26,7 +26,7 @@ class ArticlesStore implements IStore<Article> {
 
     @Override
     public List<Article> getAll() {
-        return getAll(DatabaseHelper.ID_COL, DatabaseHelper.SORT_DESC);
+        return getAll(ID_COL, SORT_DESC);
     }
 
     @Override
@@ -51,7 +51,7 @@ class ArticlesStore implements IStore<Article> {
             article.setId(cursor.getLong(cursor.getColumnIndex(ID_COL)));
             article.setName(cursor.getString(cursor.getColumnIndex(NAME_COL)));
             article.setPrice(
-                    new BigDecimal(cursor.getLong(cursor.getColumnIndex(NAME_COL)))
+                    new BigDecimal(cursor.getLong(cursor.getColumnIndex(PRICE_COL)))
                             .divide(BigDecimal.valueOf(100), 2, BigDecimal.ROUND_CEILING));
             article.setCategory(
                     StoreFactory.createCategoriesStore()

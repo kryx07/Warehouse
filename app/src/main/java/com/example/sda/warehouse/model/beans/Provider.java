@@ -4,6 +4,8 @@ import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.activities.provider.ProviderActivity;
 import com.example.sda.warehouse.utils.MyApplication;
 
+import java.util.List;
+
 public class Provider extends Bean {
     private String tel;
     private String address;
@@ -41,6 +43,20 @@ public class Provider extends Bean {
         this.address = address;
     }
 
+    public static int getPositionById(long id, List<Provider> list) {
+        int position = -1;
+
+        for (int i = 0; i < list.size(); ++i) {
+            Provider provider = list.get(i);
+            if (provider.getId() == id) {
+                position = i;
+                break;
+            }
+        }
+
+        return position;
+    }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public String getDetails() {
@@ -67,8 +83,6 @@ public class Provider extends Bean {
 
     @Override
     public String toString() {
-        return "Provider{" +
-                "name='" + getName() + '\'' +
-                '}';
+        return getName();
     }
 }

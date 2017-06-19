@@ -10,42 +10,145 @@ import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.activities.common.UpdatingActivity;
 import com.example.sda.warehouse.model.beans.Article;
 import com.example.sda.warehouse.model.beans.Category;
+import com.example.sda.warehouse.model.beans.Provider;
 import com.example.sda.warehouse.model.stores.IStore;
 import com.example.sda.warehouse.model.stores.StoreFactory;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.sda.warehouse.model.beans.Category.getPositionById;
+
 
 public class ArticleActivity extends UpdatingActivity<Article> {
+
+    @BindView(R.id.article_name_input)
+    EditText articleNameInput;
+    @BindView(R.id.article_price_input)
+    EditText articlePriceInput;
+    @BindView(R.id.category_spinner)
+    Spinner articleCategorySpinner;
+    @BindView(R.id.provider_spinner)
+    Spinner articleProviderSpinner;
+
+    private IStore<Article> store;
+    private Article article;
+
+    private List<Category> categoryList;
+    private List<Provider> providerList;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_article);
+        ButterKnife.bind(this);
+        init();
+    }
 
 
     @Override
     protected void init() {
+        store = StoreFactory.createArticlesStore();
+        article = store.getById(getId());
 
+        setupCategorySpinner();
+        setupProvidersSpinner();
+
+        if (isRequestingEDIT()) {
+            populateViewFromIntent();
+        }
     }
 
     @Override
     protected void populateViewFromIntent() {
 
+        articleNameInput.setText(article.getName());
+        articlePriceInput.setText(article.getPrice().toString());
+
+        int categoryPosition;
+        if (article.getCategory() == null) {
+            categoryPosition = 0;
+        } else {
+            categoryPosition = getPositionById(article.getCategory().getId(), categoryList);
+        }
+        if (categoryPosition == -1) {
+            categoryPosition = 0;
+        }
+
+        articleCategorySpinner.setSelection(categoryPosition);
+
+        int providerPosition;
+        if (article.getProvider() == null) {
+            providerPosition = 0;
+        } else {
+            providerPosition = Provider.getPositionById(article.getProvider().getId(), providerList);
+        }
+        if (providerPosition == -1) {
+            providerPosition = 0;
+        }
+        articleProviderSpinner.setSelection(providerPosition);
+    }
+
+    private void setupCategorySpinner() {
+        categoryList = new ArrayList<>();
+        IStore<Category> categoryStore = StoreFactory.createCategoriesStore();
+        categoryList.addAll(categoryStore.getAll());
+        ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, categoryList);
+        categoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        articleCategorySpinner.setAdapter(categoryArrayAdapter);
+    }
+
+    private void setupProvidersSpinner() {
+        providerList = new ArrayList<>();
+        IStore<Provider> articleStore = StoreFactory.createProvidersStore();
+        providerList.addAll(articleStore.getAll());
+        ArrayAdapter<Provider> articleArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, providerList);
+        articleArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        articleProviderSpinner.setAdapter(articleArrayAdapter);
     }
 
     @Override
     protected boolean areAllFieldsPopulated() {
-        return false;
+        return articleNameInput.length() != 0 && articlePriceInput.length() != 0;
     }
 
     @Override
     protected Article getItemFromView() {
-        return null;
+
+        Article article;
+
+        if (this.article == null) {
+            article = new Article();
+        } else {
+            article = this.article;
+        }
+
+        article.setName(articleNameInput.getText().toString());
+        article.setPrice(new BigDecimal(articlePriceInput.getText().toString()));
+        article.setCategory((Category) articleCategorySpinner.getSelectedItem());
+        article.setProvider((Provider) articleProviderSpinner.getSelectedItem());
+        return article;
+
     }
 
     @Override
     protected void save() {
 
+        if (areAllFieldsPopulated()) {
+            article = getItemFromView();
+            if (isRequestingEDIT()) {
+                store.update(article);
+            } else if (isRequestingADD()) {
+                store.add(article);
+            }
+            finishActivityWithOKResult();
+        } else {
+            logAndToast("Please populate all fields");
+        }
     }
 
 
@@ -140,4 +243,5 @@ public class ArticleActivity extends UpdatingActivity<Article> {
         }
 
     }*/
+
 }

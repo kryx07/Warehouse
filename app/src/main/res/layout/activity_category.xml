@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/category_view_title"
-        android:layout_marginTop="@dimen/double_category_line_margin">
+        android:layout_marginTop="@dimen/double_line_margin">
 
         <TextView
             android:id="@+id/category_name_label"
