@@ -18,6 +18,17 @@ public class Article extends Bean {
         this.provider = provider;
     }
 
+    public Article(String name, BigDecimal price, Category category, Provider provider) {
+        super(name);
+        this.price = price;
+        this.category = category;
+        this.provider = provider;
+    }
+
+    public Article() {
+
+    }
+
     public BigDecimal getPrice() {
         return price;
     }

@@ -26,16 +26,6 @@ class ProvidersStore implements IStore<Provider> {
     }
 
     @Override
-    public List<Provider> getWithoutId(long withoutId) {
-        Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.PROVIDERS_TABLE_NAME,
-                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
-                DatabaseHelper.ID_COL + "!=" + withoutId, null, null, null, null, null);
-
-        return getAllFromCursor(cursor);
-    }
-
-
-    @Override
     public List<Provider> getAll(String column, String order) {
         Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.PROVIDERS_TABLE_NAME,
                 new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
@@ -45,6 +35,7 @@ class ProvidersStore implements IStore<Provider> {
 
         return getAllFromCursor(cursor);
     }
+
 
     @Override
     public Provider getById(long id) {
@@ -56,6 +47,15 @@ class ProvidersStore implements IStore<Provider> {
                 new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
                 DatabaseHelper.ID_COL + " = " + id, null, null, null, null);
         return cursor.getCount() == 0 ? null : getAllFromCursor(cursor).get(0);
+    }
+
+    @Override
+    public List<Provider> getWithoutId(long withoutId) {
+        Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.PROVIDERS_TABLE_NAME,
+                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.TELEPHONE_COL, DatabaseHelper.ADDRESS_COL},
+                DatabaseHelper.ID_COL + "!=" + withoutId, null, null, null, null, null);
+
+        return getAllFromCursor(cursor);
     }
 
     @Override

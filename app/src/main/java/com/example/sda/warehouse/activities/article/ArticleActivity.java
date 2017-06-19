@@ -8,6 +8,7 @@ import android.widget.Spinner;
 
 import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.activities.common.UpdatingActivity;
+import com.example.sda.warehouse.model.beans.Article;
 import com.example.sda.warehouse.model.beans.Category;
 import com.example.sda.warehouse.model.stores.IStore;
 import com.example.sda.warehouse.model.stores.StoreFactory;
@@ -19,9 +20,36 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ArticleActivity extends UpdatingActivity<Category> {
+public class ArticleActivity extends UpdatingActivity<Article> {
 
-    @BindView(R.id.category_name_input)
+
+    @Override
+    protected void init() {
+
+    }
+
+    @Override
+    protected void populateViewFromIntent() {
+
+    }
+
+    @Override
+    protected boolean areAllFieldsPopulated() {
+        return false;
+    }
+
+    @Override
+    protected Article getItemFromView() {
+        return null;
+    }
+
+    @Override
+    protected void save() {
+
+    }
+
+
+ /*   @BindView(R.id.category_name_input)
     EditText categoryNameInput;
     @BindView(R.id.category_parent_spinner)
     Spinner parentCategorySpinner;
@@ -111,5 +139,5 @@ public class ArticleActivity extends UpdatingActivity<Category> {
             logAndToast("Please populate all fields");
         }
 
-    }
+    }*/
 }

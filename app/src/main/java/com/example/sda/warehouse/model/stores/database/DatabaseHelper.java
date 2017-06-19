@@ -47,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_ARTICLES = "CREATE TABLE " + ARTICLES_TABLE_NAME + " ("
             + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + NAME_COL + " TEXT, "
-            + PRICE_COL + " FLOAT, "
+            + PRICE_COL + " INTEGER, "
             + CATEGORY_ID_COL + " INTEGER, "
             + PROVIDER_ID_COL + " INTEGER "
             + ");";

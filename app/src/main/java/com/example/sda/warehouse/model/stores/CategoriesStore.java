@@ -24,6 +24,40 @@ class CategoriesStore implements IStore<Category> {
         return getAll(DatabaseHelper.ID_COL, "DESC");
     }
 
+    private boolean containsParent(Category category, Category parentCategory) {
+        if (category.getParentCategory() == null) {
+            return false;
+        } else if (category.getParentCategory().equals(parentCategory)) {
+            return true;
+        } else {
+            return containsParent(category.getParentCategory(), parentCategory);
+        }
+    }
+
+    @Override
+    public List<Category> getAll(String column, String order) {
+        Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.CATEGORY_TABLE_NAME,
+                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.PARENT_ID_COL},
+                null, null, null, null,
+                column + " " + order,
+                null);
+
+        return getCategoriesFromCursor(cursor);
+    }
+
+
+    @Override
+    public Category getById(long id) {
+        if (id <= 0) {
+            return null;
+        }
+        Cursor cursor = databaseHelper.getReadableDatabase().query(
+                DatabaseHelper.CATEGORY_TABLE_NAME,
+                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.PARENT_ID_COL},
+                DatabaseHelper.ID_COL + " = " + id, null, null, null, null);
+        return cursor.getCount() == 0 ? null : getCategoriesFromCursor(cursor).get(0);
+    }
+
     @Override
     public List<Category> getWithoutId(long withoutId) {
         Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.CATEGORY_TABLE_NAME,
@@ -40,40 +74,6 @@ class CategoriesStore implements IStore<Category> {
             }
         }
         return categoriesList;
-    }
-
-    private boolean containsParent(Category category, Category parentCategory) {
-        if (category.getParentCategory() == null) {
-            return false;
-        } else if (category.getParentCategory().equals(parentCategory)) {
-            return true;
-        } else {
-            return containsParent(category.getParentCategory(), parentCategory);
-        }
-    }
-
-
-    @Override
-    public List<Category> getAll(String column, String order) {
-        Cursor cursor = databaseHelper.getReadableDatabase().query(DatabaseHelper.CATEGORY_TABLE_NAME,
-                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.PARENT_ID_COL},
-                null, null, null, null,
-                column + " " + order,
-                null);
-
-        return getCategoriesFromCursor(cursor);
-    }
-
-    @Override
-    public Category getById(long id) {
-        if (id <= 0) {
-            return null;
-        }
-        Cursor cursor = databaseHelper.getReadableDatabase().query(
-                DatabaseHelper.CATEGORY_TABLE_NAME,
-                new String[]{DatabaseHelper.ID_COL, DatabaseHelper.NAME_COL, DatabaseHelper.PARENT_ID_COL},
-                DatabaseHelper.ID_COL + " = " + id, null, null, null, null);
-        return cursor.getCount() == 0 ? null : getCategoriesFromCursor(cursor).get(0);
     }
 
     @Override

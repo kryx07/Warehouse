@@ -55,13 +55,20 @@ public class Provider extends Bean {
         return ProviderActivity.class;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Provider{" +
                 "id='" + getId() + '\'' +
                 "name='" + getName() + '\'' +
                 "tel='" + tel + '\'' +
                 ", address='" + address + '\'' +
+                '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "Provider{" +
+                "name='" + getName() + '\'' +
                 '}';
     }
 }

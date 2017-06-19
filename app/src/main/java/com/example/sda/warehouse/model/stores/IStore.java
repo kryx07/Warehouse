@@ -8,11 +8,11 @@ public interface IStore<T> {
 
     List<T> getAll();
 
-    List<T> getWithoutId(long withoutId);
-
     List<T> getAll(String column, String order);
 
     T getById(long id);
+
+    List<T> getWithoutId(long withoutId);
 
     T getEmpty();
 
