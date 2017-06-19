@@ -20,7 +20,6 @@
         android:layout_marginTop="@dimen/double_line_margin">
 
 
-
         <EditText
             android:id="@+id/article_name_input"
             android:layout_width="match_parent"
@@ -48,14 +47,13 @@
         android:layout_marginTop="@dimen/standard_line_margin">
 
 
-
         <EditText
             android:id="@+id/article_price_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/text_fields_margin"
             android:layout_toEndOf="@+id/article_price_label"
-            android:inputType="text" />
+            android:inputType="numberDecimal" />
 
         <TextView
             android:id="@+id/article_price_label"
@@ -104,14 +102,13 @@
             android:layout_height="wrap_content"
             android:text="@string/provider"
             android:textSize="@dimen/text_field_size" />
+
         <Spinner
             android:id="@+id/provider_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/text_fields_margin"
             android:layout_toEndOf="@id/provider_label" />
-
-
 
 
     </RelativeLayout>

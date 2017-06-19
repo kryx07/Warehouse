@@ -24,15 +24,25 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.categories)
     public void startCategoriesActivity() {
-        startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
+        startActivityFromThisContext(CategoriesActivity.class);
     }
 
     @OnClick(R.id.providers)
     public void startProvidersActivity() {
-        startActivity(new Intent(getApplicationContext(), ProvidersActivity.class));
+        startActivityFromThisContext(ProvidersActivity.class);
     }
     @OnClick(R.id.articles)
     public void startArticlesActivity(){
-        startActivity(new Intent(getApplicationContext(), ArticlesActivity.class));
+        startActivityFromThisContext(ArticlesActivity.class);
+    }
+
+    @OnClick(R.id.settings)
+    public void startSettingsActivity(){
+       // startActivityFromThisContext(SettingsActivity.class);
+    }
+
+    private void startActivityFromThisContext(Class activityClass){
+        startActivity(new Intent(getApplicationContext(), activityClass));
+
     }
 }
