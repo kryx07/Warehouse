@@ -1,6 +1,4 @@
-package com.example.sda.warehouse.model.stores;
-
-import com.example.sda.warehouse.model.beans.Category;
+package com.example.sda.warehouse.model;
 
 import java.util.List;
 

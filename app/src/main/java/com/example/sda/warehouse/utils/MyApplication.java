@@ -1,6 +1,7 @@
 package com.example.sda.warehouse.utils;
 
 import android.app.Application;
+import android.os.Environment;
 import android.util.Log;
 
 public class MyApplication extends Application {
@@ -31,5 +32,11 @@ public class MyApplication extends Application {
     private static void logDebug(String string) {
         Log.e(MyApplication.class.toString(), string);
 
+    }
+
+
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 }

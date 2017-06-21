@@ -1,8 +1,11 @@
 package com.example.sda.warehouse.model.stores;
 
+import com.example.sda.warehouse.model.IStore;
 import com.example.sda.warehouse.model.beans.Article;
 import com.example.sda.warehouse.model.beans.Category;
 import com.example.sda.warehouse.model.beans.Provider;
+import com.example.sda.warehouse.model.files.CategoriesStore;
+import com.example.sda.warehouse.utils.MyApplication;
 
 import static com.example.sda.warehouse.model.stores.StoreFactory.BeanClass.getBeanFromClass;
 
@@ -22,7 +25,7 @@ public class StoreFactory {
     }
 
     public static IStore<Category> createCategoriesStore() {
-        return new CategoriesStore();
+        return new CategoriesStore("categories.txt", MyApplication.getContext());
     }
 
     public static IStore<Provider> createProvidersStore() {
@@ -32,6 +35,7 @@ public class StoreFactory {
     private static String getClassName(Class clazz) {
         return clazz.getSimpleName();
     }
+
     public static IStore<Article> createArticlesStore() {
         return new ArticlesStore();
     }

@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.model.beans.Bean;
-import com.example.sda.warehouse.model.stores.IStore;
+import com.example.sda.warehouse.model.IStore;
 import com.example.sda.warehouse.model.stores.StoreFactory;
 import com.example.sda.warehouse.ui.ItemsAdapter;
 

@@ -22,6 +22,8 @@
     <string name="settings">Settings</string>
 
     <string name="shared_prefs_error">No such parameter</string>
+    <string name="cant_save">No permissions, I can\'t save the note</string>
+    <string name="note">Note</string>
 
 
 </resources>

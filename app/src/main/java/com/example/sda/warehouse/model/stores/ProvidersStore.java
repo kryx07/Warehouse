@@ -2,9 +2,9 @@ package com.example.sda.warehouse.model.stores;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.example.sda.warehouse.model.IStore;
 import com.example.sda.warehouse.model.beans.Provider;
 import com.example.sda.warehouse.model.stores.database.DatabaseHelper;
 

@@ -3,6 +3,10 @@ package com.example.sda.warehouse.model.beans;
 import com.example.sda.warehouse.R;
 import com.example.sda.warehouse.activities.category.CategoryActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +23,16 @@ public class Category extends Bean {
     public Category(String name, Category parentCategory) {
         super(name);
         this.parentCategory = parentCategory;
+    }
+
+    public Category(JSONObject category) throws JSONException {
+        super();
+        setId(category.getLong("id"));
+        String name = category.getString("name");
+
+        if (category.has("parent_category")) {
+            parentCategory = new Category(category.getJSONObject("parent_category"));
+        }
     }
 
     public Category() {
@@ -76,4 +90,22 @@ public class Category extends Bean {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+
+    public class IdComparator implements Comparator<Category> {
+
+        @Override
+        public int compare(Category o1, Category o2) {
+            return Long.compare(o1.getId(), o2.getId());
+        }
+    }
+
+    public class NameComparator implements Comparator<Category> {
+
+        @Override
+        public int compare(Category o1, Category o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
+    }
+
 }

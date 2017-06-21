@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.sda.warehouse.R;
+import com.example.sda.warehouse.model.IStore;
 import com.example.sda.warehouse.model.beans.Article;
 import com.example.sda.warehouse.model.stores.database.DatabaseHelper;
 import com.example.sda.warehouse.utils.MyApplication;

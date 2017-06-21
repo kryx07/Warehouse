@@ -11,7 +11,7 @@ import com.example.sda.warehouse.activities.common.UpdatingActivity;
 import com.example.sda.warehouse.model.beans.Article;
 import com.example.sda.warehouse.model.beans.Category;
 import com.example.sda.warehouse.model.beans.Provider;
-import com.example.sda.warehouse.model.stores.IStore;
+import com.example.sda.warehouse.model.IStore;
 import com.example.sda.warehouse.model.stores.StoreFactory;
 
 import java.math.BigDecimal;

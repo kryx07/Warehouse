@@ -31,17 +31,23 @@ public class MainActivity extends AppCompatActivity {
     public void startProvidersActivity() {
         startActivityFromThisContext(ProvidersActivity.class);
     }
+
     @OnClick(R.id.articles)
-    public void startArticlesActivity(){
+    public void startArticlesActivity() {
         startActivityFromThisContext(ArticlesActivity.class);
     }
 
     @OnClick(R.id.settings)
-    public void startSettingsActivity(){
-       // startActivityFromThisContext(SettingsActivity.class);
+    public void startSettingsActivity() {
+        // startActivityFromThisContext(SettingsActivity.class);
     }
 
-    private void startActivityFromThisContext(Class activityClass){
+    @OnClick(R.id.note)
+    public void startNoteActivity() {
+        startActivityFromThisContext(NoteActivity.class);
+    }
+
+    private void startActivityFromThisContext(Class activityClass) {
         startActivity(new Intent(getApplicationContext(), activityClass));
 
     }
