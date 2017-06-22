@@ -7,10 +7,6 @@ import com.example.sda.warehouse.model.IStore;
 import com.example.sda.warehouse.model.beans.Categories;
 import com.example.sda.warehouse.model.beans.Category;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -18,7 +14,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

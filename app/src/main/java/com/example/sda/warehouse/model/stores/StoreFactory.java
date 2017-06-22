@@ -4,8 +4,6 @@ import com.example.sda.warehouse.model.IStore;
 import com.example.sda.warehouse.model.beans.Article;
 import com.example.sda.warehouse.model.beans.Category;
 import com.example.sda.warehouse.model.beans.Provider;
-import com.example.sda.warehouse.model.files.CategoriesStore;
-import com.example.sda.warehouse.utils.MyApplication;
 
 import static com.example.sda.warehouse.model.stores.StoreFactory.BeanClass.getBeanFromClass;
 
@@ -24,8 +22,11 @@ public class StoreFactory {
         }
     }
 
+    /* public static IStore<Category> createCategoriesStore() {
+         return new CategoriesStore("categories.txt", MyApplication.getContext());
+     }*/
     public static IStore<Category> createCategoriesStore() {
-        return new CategoriesStore("categories.txt", MyApplication.getContext());
+        return new CategoriesStore();
     }
 
     public static IStore<Provider> createProvidersStore() {

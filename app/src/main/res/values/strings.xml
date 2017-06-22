@@ -24,6 +24,8 @@
     <string name="shared_prefs_error">No such parameter</string>
     <string name="cant_save">No permissions, I can\'t save the note</string>
     <string name="note">Note</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>
